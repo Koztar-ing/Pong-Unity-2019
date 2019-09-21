@@ -8,11 +8,13 @@ public class Ball : MonoBehaviour
     Rigidbody2D rigidBody2D;
     int score;
     float speed = 4.5f;
+    ScoreController scoreController;
 
     void Awake()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
         rigidBody2D.AddForce(new Vector2(speed * 50, 0));
+        scoreController = GameObject.Find("ScoreController").GetComponent<ScoreController>();
     }
 
     void Update()
@@ -25,11 +27,13 @@ public class Ball : MonoBehaviour
         if(transform.position.x > 8.5f)
         {
             score = 1;
+            scoreController.AddScoreToPlayer1();
             StartCoroutine(StartOverAgain());
         }
         else if (transform.position.x < -8.5f)
         {
             score = 0;
+            scoreController.AddScoreToEnemy();
             StartCoroutine(StartOverAgain());
         }
     }
